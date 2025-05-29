@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: girlfriend-problem-app  # You can name this anything
+    env: java
+    plan: free
+    buildCommand: ./mvnw clean package
+    startCommand: java -Dserver.port=$PORT -jar target/*.jar
+    envVars:
+      - key: JAVA_VERSION
+        value: 17
