@@ -23,7 +23,7 @@ public class ProblemServiceImpl implements ProblemService {
     @Override
     public void submitProblem(ProblemDTO dto) {
         Problem problem = new Problem();
-        problem.setSenderName("MAHI ❤️");
+        problem.setSenderName(dto.getSenderName());
         problem.setEmail(dto.getEmail());
         problem.setMessage(dto.getMessage());
         problem.setReplied(false);
