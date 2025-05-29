@@ -1,14 +1,18 @@
-# Use an official OpenJDK runtime as a parent image
-FROM eclipse-temurin:17-jdk-alpine
+FROM maven:3.8.5-openjdk-17 AS build
 
-# Set the working directory inside the container
 WORKDIR /app
 
-# Copy the jar file to the container
-COPY target/*.jar app.jar
+COPY pom.xml .
+COPY src ./src
 
-# Expose port 8080 (or whatever your app uses)
+RUN mvn clean package -DskipTests
+
+FROM openjdk:17-jdk-slim
+
+WORKDIR /app
+
+COPY --from=build /app/target/*.jar app.jar
+
 EXPOSE 8080
 
-# Run the jar file
 ENTRYPOINT ["java", "-Dserver.port=$PORT", "-jar", "app.jar"]
